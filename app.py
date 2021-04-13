@@ -2,7 +2,6 @@ from flask import Flask, abort
 from flask_restful import Resource, reqparse, Api
 
 from tensorbay.dataset import Dataset, FusionDataset, Data
-from gevent import pywsgi
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,8 +15,6 @@ def vision(local_dataset):
 
     if not isinstance(dataset, (Dataset, FusionDataset)):
         raise TypeError("It is not a Dataset.")
-    server = pywsgi.WSGIServer(('0.0.0.0', 5000), app)
-    server.serve_forever()
     app.run()
 
 

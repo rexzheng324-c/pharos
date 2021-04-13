@@ -6,4 +6,3 @@
 tensorbay
 flask
 flask-restful
-gevent
