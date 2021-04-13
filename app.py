@@ -103,22 +103,27 @@ class DataUriList(Resource):
                 response["urls"].append(response_data)
         else:
             for frame in segment[offset: offset + limit]:
+                response_frame = {
+                    "frameId": frame.frame_id if hasattr(frame, "frame_id") else "",
+                    "frame": []
+                }
                 for sensor_name, data in frame.items():
+                    response_data = {
+                        "sensor_name": sensor_name,
+                        "timestamp": data.timestamp if hasattr(data, "timestamp") else 0
+                    }
                     if isinstance(data, Data):
-                        response_data = {
-                            "remotePath": data.target_remote_path,
-                            "url": data.path
-                        }
+                        response_data["remotePath"] = data.target_remote_path
+                        response_data["url"] = data.path
                     else:
-                        response_data = {
-                            "remotePath": data.path,
-                            "url": data.get_url()
-                        }
-                    response["urls"].append(response_data)
+                        response_data["remotePath"] = data.path
+                        response_data["url"] = data.get_url()
+                    response_frame["frame"].append(response_data)
+                response["urls"].append(response_frame)
 
         response["offset"] = offset
         response["recordSize"] = len(response["urls"])
-        response["totalCount"] = len(segment) if not dataset_type else sum(len(frame) for frame in segment)
+        response["totalCount"] = len(segment)
 
         if sort_by == "desc":
             response["urls"].reverse()
@@ -169,7 +174,7 @@ class LabelList(Resource):
                 }
                 for sensor_name, data in frame.items():
                     response_data = {
-                        "sensor_name": segment_name,
+                        "sensor_name": sensor_name,
                         "remotePath": data.target_remote_path if isinstance(data, Data) else data.path,
                         "timestamp": data.timestamp if hasattr(data, "timestamp") else 0,
                         "label": data.label.dumps()
