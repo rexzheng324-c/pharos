@@ -1,0 +1,9 @@
+#
+# Copyright 2021 Graviti. Licensed under MIT License.
+#
+
+# package dependences
+tensorbay
+flask
+flask-restful
+gevent
