@@ -171,6 +171,7 @@ class LabelList(Resource):
                     response_data = {
                         "sensor_name": segment_name,
                         "remotePath": data.target_remote_path if isinstance(data, Data) else data.path,
+                        "timestamp": data.timestamp if hasattr(data, "timestamp") else 0,
                         "label": data.label.dumps()
                     }
                     response_frame["frame"].append(response_data)
