@@ -78,6 +78,7 @@ class DataUriList(Resource):
         segment_name = args["segmentName"]
         response = {
             "segmentName": segment_name,
+            "type": dataset_type,
             "urls": [],
         }
         try:
