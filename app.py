@@ -127,6 +127,47 @@ class DataUriList(Resource):
         return response
 
 
+Label_Types = [
+    {
+        "labelKey": "BOX2D",
+        "labelType": "2D BOX"
+    },
+    {
+        "labelKey": "CLASSIFICATION",
+        "labelType": "CLASSIFICATION"
+    },
+    {
+        "labelKey": "POLYGON2D",
+        "labelType": "2D POLYGON"
+    },
+    {
+        "labelKey": "POLYLINE2D",
+        "labelType": "2D POLYLINE"
+    },
+    {
+        "labelKey": "CUBOID2D",
+        "labelType": "2D CUBOID"
+    },
+    {
+        "labelKey": "BOX3D",
+        "labelType": "3D BOX"
+    },
+    {
+        "labelKey": "KEYPOINTS2D",
+        "labelType": "KEYPOINTS"
+    },
+    {
+        "labelKey": "SENTENCE",
+        "labelType": "Audio Sentence"
+    },
+]
+
+
+class LabelTypeList(Resource):
+    def get(self):
+        return {"labelTypes":  Label_Types}
+
+
 class LabelList(Resource):
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
@@ -217,6 +258,7 @@ api.add_resource(Catalog, '/catalogs')
 api.add_resource(LabelList, '/labels')
 api.add_resource(SensorList, '/sensors')
 api.add_resource(DataUriList, '/data/urls')
+api.add_resource(LabelTypeList, '/labelTypes')
 
 
 if __name__ == '__main__':
