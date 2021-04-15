@@ -254,12 +254,21 @@ class SensorList(Resource):
         }
 
 
+class Note(Resource):
+    def get(self):
+        return {
+            "type": dataset_type,
+            "isContinuous": dataset.is_continuous
+        }
+
+
 api.add_resource(SegmentList, '/segments')
 api.add_resource(Catalog, '/catalogs')
 api.add_resource(LabelList, '/labels')
 api.add_resource(SensorList, '/sensors')
 api.add_resource(DataUriList, '/data/urls')
 api.add_resource(LabelTypeList, '/labelTypes')
+api.add_resource(Note, '/notes')
 
 
 if __name__ == '__main__':
